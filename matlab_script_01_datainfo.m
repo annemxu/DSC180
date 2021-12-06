@@ -4,8 +4,6 @@ filesep = '\';
 mainDir = '\test';
 codeDir = '\test\_code';
 
-
-
 % get current path 
 testDir = pwd; 
 fprintf(testDir)
@@ -13,11 +11,11 @@ fprintf(testDir)
 fprintf( '\n=========Starting Script 01=========\n');
 
 rmpath([codeDir filesep '_trash']);
-dataDir = [mainDir filesep 'test'];
-matDir =  [dataDir filesep '_mat'];
+dataDir = [mainDir filesep 'data'];
+matDir =  [pwd filesep '_mat'];
 fcsDir = [dataDir filesep '_fcs'];
 
-fprintf( '\n=========Startingggg Script 01=========\n');
+fprintf( '\n=========2 Script 01=========\n');
 fprintf( '\n');
 fprintf(dataDir)
 fprintf( '\n');
@@ -26,7 +24,7 @@ fprintf( '\n');
 
 fprintf(fcsDir)
 fprintf( '\n');
-fprintf( '\n=========Starting Script 01=========\n');
+fprintf( '\n=========3 Script 01=========\n');
 
 if ~isdir(matDir);mkdir(matDir);end
 cd(mainDir)
@@ -140,7 +138,6 @@ save([testDir '\test\data\' filesep 'info.mat']);
 logFile = 'log.txt';
 logFid = fopen(logFile, 'a+');
 
-fprintf( logFile);
 
 fprintf( dataDir);
 

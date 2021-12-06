@@ -18,9 +18,6 @@ if ~isdir(dataDir);mkdir(dataDir);end
 fcsDir = [dataDir filesep '_fcs'];
 if ~isdir(fcsDir);mkdir(fcsDir);end
 
-% open log file
-logFile = 'log.txt';
-logFid = fopen(logFile, 'wt');
 
 % Download zip files
 urlFile = [dataDir filesep 'BMreport.html'];
@@ -33,11 +30,10 @@ iInh =0;
 
 urlFid = fopen(urlFile, 'r');
 zipFile = [testDir '\test\data\Akti.zip'];
-fprintf('oimpoimpompom:::::::::::::: %s\n', zipFile);
+fprintf('Downloading %s\n', zipFile);
 dT = tic;
 fprintf('\n')
-fprintf('oitepipsmtoipsmttom')
-fprintf('Downloading %s\n', 'https://s3.amazonaws.com/reports.public.cytobank.org/105/AKTi.zip');
+fprintf('Getting %s, may take a bit but this was the smallest piece of data we could retrieve due to the pipeline process \n', 'https://s3.amazonaws.com/reports.public.cytobank.org/105/AKTi.zip');
 fprintf('\n')
 urlwrite('https://s3.amazonaws.com/reports.public.cytobank.org/105/AKTi.zip', zipFile);
 fprintf('\t Unzipping %s\n', zipFile);
@@ -45,14 +41,12 @@ fprintf('\n')
 zT =tic;
 fprintf('\n')
 unzip(zipFile, fcsDir);
-fprintf(logFid, 'Unziped %s in %s, %.3f sec\n', zipFile, fcsDir, toc(zT));
+fprintf( 'Unzipped %s in %s, %.3f sec\n', zipFile, fcsDir, toc(zT));
  
-fprintf(logFid, '\n=======================================================================================\n');
-fprintf(logFid, '            Finished script_00_download_data, time elapsed: %.3f sec                  \n', toc(scrT));
-fprintf(logFid, '\n=======================================================================================\n');
+fprintf( '\n=======================================================================================\n');
+fprintf( '            Finished downloading, time elapsed: %.3f sec                  \n', toc(scrT));
+fprintf( '\n=======================================================================================\n');
 
-
-fclose(logFid);
 fclose(urlFid);
 
 clearvars -except *Dir inhibitors logFile

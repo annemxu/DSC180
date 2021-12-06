@@ -17,72 +17,43 @@ from model import train
 
 def main(targets):
     '''
-    Runs the main project pipeline logic, given the targets.
-    targets must contain: 'data', 'analysis', 'model'. 
-    
-    `main` runs the targets in order of data=>analysis=>model.
+    Runs the main project pipeline logic
     '''
-   
 
-    # step2 = 'cd extern/engines/python && '
-    # p = 'python setup.py install'
-    # os.system('cd C:/Program Files/MATLAB/R2021b && ' + step2 + p)
-    # os.system('python3 setup.py install') 
-    # os.system('cmd /k "date"') 
+
+    #Paths to rStudio and Matlab Applications: 
+    rStudioPath ='C:/Program Files/R/R-4.0.2/bin/Rscript'
+    matLabPath ='C:/Program Files/MATLAB/R2021b'
+
+
+
+    step1 = 'cd ' + matLabPath + ' && ' 
+    step2 = 'cd extern/engines/python && '
+    p = 'python setup.py install'
+    os.system(step1 + step2 + p)
+    os.system('python3 setup.py install') 
+    os.system('cmd /k "date"') 
 
     #if you get error like error: could not create 'build' : Access is denied
     #must run these commands by running command prompt on administrator
 
-    print("starting")
+    print("------------STEP 1) starting matlab files")
 
     import matlab.engine
     eng = matlab.engine.start_matlab()
     eng.matlab_script_00_download(nargout=0)
-
     eng.matlab_script_01_datainfo(nargout=0)
-
-    #filepath to Rscript
-    command ='C:/Program Files/R/R-4.0.2/bin/Rscript'
-
-    retcode = subprocess.check_call([command, 'readMCdata.R'], shell=True)
-    retcode = subprocess.check_call([command, 'configCytoEuler_inhibitor.R'], shell=True)
-    retcode = subprocess.check_call([command, 'massCytoRuns_inhibitor.R'], shell=True)
-    retcode = subprocess.check_call([command, 'aggregate.R'], shell=True)
-
-     # from pip._internal import main as pip
-    # pip(['install', '--user', 'oct2py'])
-    # import oct2py
+    eng.matlab_script_02_getInfo(nargout=0)
 
 
+    print("------------STEP 2) starting rstudio files")
 
-    # script = "b = 5;\n" \
-    #          "h = 3;\n" \
-    #          "a = 0.5*(b.* h)"
-
-    # with open("myScript.m","w+") as f:
-    #     f.write(script)
-
-    # eng = matlab.engine.start_matlab()
-    # eng.myScript(nargout=0)
-
-    # from oct2py import Oct2Py
-    # oc = Oct2Py()
-
-
-    # script = "function y = myScript(x)\n" \
-    #          "    y = x-5" \
-    #          "end"
-
-    # with open("myScript.m","w+") as f:
-    #     f.write(script)
-
-    # oc.myScript(7)
-
-    
-
+    retcode = subprocess.check_call([rStudioPath, 'readMCdata.R'], shell=True)
+    retcode = subprocess.check_call([rStudioPath, 'configCytoEuler_inhibitor.R'], shell=True)
+    retcode = subprocess.check_call([rStudioPath, 'massCytoRuns_inhibitor.R'], shell=True)
+    retcode = subprocess.check_call([rStudioPath, 'aggregate.R'], shell=True)
 
     print("finished installing")
-
 
     if 'data' in targets:
         with open('config/data-params.json') as fh:

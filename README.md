@@ -12,6 +12,3 @@ R dependencies:
 		install.packages("fields", dependencies = TRUE)
 		install.packages("hmisc", dependencies = TRUE)
 		install.packages("reshape2", dependencies = TRUE)
-		
-
-

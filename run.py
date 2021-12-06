@@ -4,6 +4,7 @@ import sys
 import json
 import pip 
 import os
+import subprocess
 
 sys.path.insert(0, 'src/data')
 sys.path.insert(0, 'src/analysis')
@@ -40,9 +41,13 @@ def main(targets):
 
     eng.matlab_script_01_datainfo(nargout=0)
 
+    #filepath to Rscript
+    command ='C:/Program Files/R/R-4.0.2/bin/Rscript'
 
-
-    
+    retcode = subprocess.check_call([command, 'readMCdata.R'], shell=True)
+    retcode = subprocess.check_call([command, 'configCytoEuler_inhibitor.R'], shell=True)
+    retcode = subprocess.check_call([command, 'massCytoRuns_inhibitor.R'], shell=True)
+    retcode = subprocess.check_call([command, 'aggregate.R'], shell=True)
 
      # from pip._internal import main as pip
     # pip(['install', '--user', 'oct2py'])

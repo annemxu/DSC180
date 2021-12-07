@@ -5,6 +5,8 @@ import json
 import pip 
 import os
 import subprocess
+from os import listdir
+from os.path import isfile, join
 
 sys.path.insert(0, 'src/data')
 sys.path.insert(0, 'src/analysis')
@@ -52,6 +54,18 @@ def main(targets):
     retcode = subprocess.check_call([rStudioPath, 'configCytoEuler_inhibitor.R'], shell=True)
     retcode = subprocess.check_call([rStudioPath, 'massCytoRuns_inhibitor.R'], shell=True)
     retcode = subprocess.check_call([rStudioPath, 'aggregate.R'], shell=True)
+
+    print("------------STEP 3) starting validation")
+
+    #path to effects folder
+    mypath = "C:/Users/Daniel Tong/Desktop/school stuff/DSC/DSC 180A/BM/effects"
+
+    onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    
+    results = []
+    for i in onlyfiles:
+        temp = i.split("_")
+        results.append([temp[0], temp[4], temp[5][:-4]])
 
     print("finished installing")
 

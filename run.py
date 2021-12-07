@@ -61,11 +61,13 @@ def main(targets):
     mypath = "C:/Users/Daniel Tong/Desktop/school stuff/DSC/DSC 180A/BM/effects"
 
     onlyfiles = [f for f in listdir(mypath) if isfile(join(mypath, f))]
-    
+
     results = []
     for i in onlyfiles:
         temp = i.split("_")
-        results.append([temp[0], temp[4], temp[5][:-4]])
+
+        if len(temp) > 4:
+            results.append([temp[0], temp[4], temp[5][:-4]])
 
     print("finished installing")
 
